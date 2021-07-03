@@ -70,6 +70,11 @@ class MainActivity : AppCompatActivity() {
             override fun onItemClicked(position: Int, view: View) {
                 when{
                     position == 0 -> FullArticleFun()
+                    position == 1 -> FullArticleFun()
+                    position == 2 -> FullArticleFun()
+                    position == 3 -> FullArticleFun()
+                    position == 4 -> FullArticleFun()
+                    position == 5 -> FullArticleFun()
                 }
             }
 

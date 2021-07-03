@@ -1,12 +1,17 @@
 package model
 
+
 data class Articles(
 
     var name: String = "",
     var author: String = "",
-    var title: String = ""
+    var title: String = "",
 
-)
+
+
+
+    )
+
 
 
 
@@ -16,9 +21,18 @@ class ArticlesBuilder{
     var authorArticle: String = ""
     var titleArticle: String = ""
 
-    fun build(): Articles = Articles(nameArticle, authorArticle, titleArticle)
+    fun build(): Articles = Articles(
+        nameArticle,
+        authorArticle,
+        titleArticle,
+
+
+
+    )
 
 }
+
+
 
 fun articles(block: ArticlesBuilder.() -> Unit): Articles = ArticlesBuilder().apply(block).build()
 

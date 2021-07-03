@@ -1,10 +1,13 @@
 package com.example.androidnews
 
+import OnClick.OnItemClickListener
+import OnClick.addOnItemClickListener
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidnews.databinding.ActivityFullArticleBinding
 import com.example.androidnews.databinding.ActivityMainBinding
 import model.Articles
+import model.addArticles
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
         val articles: MutableList<Articles> = ArrayList()
         for (a in 0..10){
@@ -57,10 +61,19 @@ class MainActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.recyclerview).adapter = articleAdapter
         findViewById<RecyclerView>(R.id.recyclerview).layoutManager = LinearLayoutManager(applicationContext)
 
-        val recycler_articles = findViewById<RecyclerView>(R.id.recyclerview)
+        val recycler_articles = binding.recyclerview
+        recycler_articles.adapter = ArticleAdapter(addArticles())
         recycler_articles.layoutManager = GridLayoutManager(applicationContext, 3)
 
+        recycler_articles.addOnItemClickListener(object: OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                when{
+                    position == 0 -> FullArticleFun()
+                }
+            }
 
+
+        })
     }
 
     private fun FullArticleFun(){
@@ -71,3 +84,5 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
+

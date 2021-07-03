@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidnews.databinding.ActivityFullArticleBinding
+import com.squareup.picasso.Picasso
 import model.FullArticles
 import model.addFullArticles
 
@@ -35,7 +36,7 @@ class FullArticle : AppCompatActivity() {
         val description = intent.getStringExtra("description")
         findViewById<TextView>(R.id.tv_description).text = description
         val image = intent.getStringExtra("image")
-       // findViewById<ImageView>(R.id.iv_image).setImageResource(0) = image
+        Picasso.get().load(image).into(findViewById<ImageView>(R.id.iv_image));
         val data = intent.getStringExtra("data")
         findViewById<TextView>(R.id.tv_date).text = data
 

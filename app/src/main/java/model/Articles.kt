@@ -1,19 +1,21 @@
 package model
 
-import java.io.Serializable
+import com.google.gson.annotations.SerializedName
 
 class Articles(
-
+    @SerializedName("name")
     var name: String = "",
+    @SerializedName("author")
     var author: String = "",
+    @SerializedName("title")
     var title: String = "",
+    @SerializedName("description")
     var description: String = "",
-    var image: Int = 0,
+    @SerializedName("urlToImage")
+    var image: String = "",
+    @SerializedName("publishedAt")
     var data: String = ""
     )
-
-
-
 
 class ArticlesBuilder{
 
@@ -21,7 +23,7 @@ class ArticlesBuilder{
     var authorArticle: String = ""
     var titleArticle: String = ""
     var description: String = ""
-    var image: Int = 0
+    var image: String = ""
     var date: String = ""
 
     fun build(): Articles = Articles(
@@ -35,8 +37,6 @@ class ArticlesBuilder{
     )
 
 }
-
-
 
 fun articles(block: ArticlesBuilder.() -> Unit): Articles = ArticlesBuilder().apply(block).build()
 

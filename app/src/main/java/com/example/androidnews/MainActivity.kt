@@ -1,5 +1,6 @@
 package com.example.androidnews
 
+import Adapter.FullArticlesAdapter
 import OnClick.OnItemClickListener
 import OnClick.addOnItemClickListener
 import android.content.Intent
@@ -7,14 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidnews.databinding.ActivityFullArticleBinding
 import com.example.androidnews.databinding.ActivityMainBinding
 import model.Articles
+import model.FullArticlesBuilder
 import model.addArticles
 
 class MainActivity : AppCompatActivity() {
@@ -68,13 +67,11 @@ class MainActivity : AppCompatActivity() {
 
         recycler_articles.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
+                for(i in 0..10){
                 when{
-                    position == 0 -> FullArticleFun()
-                    position == 1 -> FullArticleFun()
-                    position == 2 -> FullArticleFun()
-                    position == 3 -> FullArticleFun()
-                    position == 4 -> FullArticleFun()
-                    position == 5 -> FullArticleFun()
+                        position == i -> FullArticleFun(i)
+                    }
+
                 }
             }
 
@@ -82,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun FullArticleFun(){
+    private fun FullArticleFun(idFullArticle: Int){
         val intent = Intent(this, FullArticle::class.java)
         startActivity(intent)
     }

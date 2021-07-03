@@ -2,14 +2,12 @@ package Adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidnews.databinding.ArticleItemBinding
-import model.Articles
-import model.full_articles
+import model.FullArticles
 
 
-class FullArticlesAdapter(val fullarticles: MutableList<Articles>):RecyclerView.Adapter<FullArticlesAdapter.FullArticlesViewHolder>() {
+class FullArticlesAdapter(val fullarticles: MutableList<FullArticles>):RecyclerView.Adapter<FullArticlesAdapter.FullArticlesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FullArticlesViewHolder{
         val binding = ArticleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FullArticlesViewHolder(binding)

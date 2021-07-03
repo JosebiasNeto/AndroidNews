@@ -5,6 +5,7 @@ import com.example.androidnews.R
 
 data class FullArticles(
 
+    var id: Int = 0,
     var name: String = "",
     var author: String = "",
     var title: String = "",
@@ -19,6 +20,7 @@ data class FullArticles(
 
 class FullArticlesBuilder{
 
+    var idFullArticle: Int = 0
     var nameFullArticle: String = ""
     var authorFullArticle: String = ""
     var titleFullArticle: String = ""
@@ -27,6 +29,7 @@ class FullArticlesBuilder{
     var dateFullArticle: String = ""
 
     fun build(): FullArticles = FullArticles(
+        idFullArticle,
         nameFullArticle,
         authorFullArticle,
         titleFullArticle,
@@ -45,6 +48,7 @@ fun full_articles(block: FullArticlesBuilder.() -> Unit): FullArticles = FullArt
 fun addFullArticles(): MutableList<FullArticles> = mutableListOf(
 
     full_articles {
+        idFullArticle = 0
         nameFullArticle = "Name1"
         authorFullArticle = "Author1"
         titleFullArticle = "Title1"
@@ -54,6 +58,7 @@ fun addFullArticles(): MutableList<FullArticles> = mutableListOf(
 
     },
     full_articles {
+        idFullArticle = 1
         nameFullArticle = "Name2"
         authorFullArticle = "Author2"
         titleFullArticle = "Title2"

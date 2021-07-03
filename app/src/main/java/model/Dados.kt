@@ -25,10 +25,14 @@ fun articles(block: ArticlesBuilder.() -> Unit): Articles = ArticlesBuilder().ap
 fun addArticles(): MutableList<Articles> = mutableListOf(
 
     articles {
-
+        nameArticle = "Name1"
+        authorArticle = "Author1"
+        titleArticle = "Title1"
     },
     articles {
-
+        nameArticle = "Name2"
+        authorArticle = "Author2"
+        titleArticle = "Title2"
     },
     articles {
 

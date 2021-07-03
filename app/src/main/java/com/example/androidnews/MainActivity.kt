@@ -46,8 +46,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
+        /*
         val articles: MutableList<Articles> = ArrayList()
         for (a in 0..10){
             val article = Articles()
@@ -56,14 +57,14 @@ class MainActivity : AppCompatActivity() {
             article.title = "Title$a"
             articles.add(article)
         }
-
-        articleAdapter = ArticleAdapter(articles)
-        findViewById<RecyclerView>(R.id.recyclerview).adapter = articleAdapter
-        findViewById<RecyclerView>(R.id.recyclerview).layoutManager = LinearLayoutManager(applicationContext)
+        */
+        //articleAdapter = ArticleAdapter(articles)
+        //findViewById<RecyclerView>(R.id.recyclerview).adapter = articleAdapter
+        //findViewById<RecyclerView>(R.id.recyclerview).layoutManager = LinearLayoutManager(applicationContext)
 
         val recycler_articles = binding.recyclerview
         recycler_articles.adapter = ArticleAdapter(addArticles())
-        recycler_articles.layoutManager = GridLayoutManager(applicationContext, 3)
+        recycler_articles.layoutManager = LinearLayoutManager(applicationContext)
 
         recycler_articles.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {

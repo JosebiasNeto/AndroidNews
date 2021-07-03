@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidnews.databinding.ActivityMainBinding
 import model.Articles
 import model.FullArticlesBuilder
-import model.addArticles
+
+import model.getArticles
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,25 +63,28 @@ class MainActivity : AppCompatActivity() {
         //findViewById<RecyclerView>(R.id.recyclerview).layoutManager = LinearLayoutManager(applicationContext)
 
         val recycler_articles = binding.recyclerview
-        recycler_articles.adapter = ArticleAdapter(addArticles())
+        recycler_articles.adapter = ArticleAdapter(getArticles())
         recycler_articles.layoutManager = LinearLayoutManager(applicationContext)
 
         recycler_articles.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                for(i in 0..10){
-                when{
-                        position == i -> FullArticleFun(i)
-                    }
-
-                }
+                openFullArticle(position)
             }
 
 
         })
     }
 
-    private fun FullArticleFun(idFullArticle: Int){
+    private fun openFullArticle(idFullArticle: Int){
         val intent = Intent(this, FullArticle::class.java)
+
+        val a: Articles = getArticles()[idFullArticle]
+        intent.putExtra("name", a.name)
+        intent.putExtra("author", a.author)
+        intent.putExtra("title", a.title)
+        intent.putExtra("description", a.description)
+        intent.putExtra("image", a.image)
+        intent.putExtra("data", a.data)
         startActivity(intent)
     }
 

@@ -3,8 +3,8 @@ package model
 import com.google.gson.annotations.SerializedName
 
 class Articles(
-    @SerializedName("name")
-    var name: String = "",
+    @SerializedName("source")
+    var source: Source,
     @SerializedName("author")
     var author: String = "",
     @SerializedName("title")
@@ -19,7 +19,8 @@ class Articles(
 
 class ArticlesBuilder{
 
-    var nameArticle: String = ""
+    lateinit var sourceArticle: Source
+   // var nameArticle: String = ""
     var authorArticle: String = ""
     var titleArticle: String = ""
     var description: String = ""
@@ -27,7 +28,8 @@ class ArticlesBuilder{
     var date: String = ""
 
     fun build(): Articles = Articles(
-        nameArticle,
+    //    nameArticle,
+        sourceArticle,
         authorArticle,
         titleArticle,
         description,
@@ -40,6 +42,7 @@ class ArticlesBuilder{
 
 fun articles(block: ArticlesBuilder.() -> Unit): Articles = ArticlesBuilder().apply(block).build()
 
+/*
 fun getArticles(): MutableList<Articles> = mutableListOf(
 
     articles {
@@ -67,9 +70,4 @@ fun getArticles(): MutableList<Articles> = mutableListOf(
     articles {
 
     },
-
-
-
-
-
-)
+) */

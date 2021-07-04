@@ -16,7 +16,7 @@ import model.Articles
 import model.ArticlesResponse
 import model.FullArticlesBuilder
 
-import model.getArticles
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private inner class ArticleHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(article: Articles){
-            itemView.findViewById<TextView>(R.id.tv_name).text = article.name
+            itemView.findViewById<TextView>(R.id.tv_name).text = article.source.name
             itemView.findViewById<TextView>(R.id.tv_author).text = article.author
             itemView.findViewById<TextView>(R.id.tv_title).text = article.title
         }
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, FullArticle::class.java)
 
         val a: Articles = articlesList[idFullArticle]
-        intent.putExtra("name", a.name)
+        intent.putExtra("name", a.source.name)
         intent.putExtra("author", a.author)
         intent.putExtra("title", a.title)
         intent.putExtra("description", a.description)

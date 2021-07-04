@@ -1,18 +1,18 @@
 package com.example.androidnews
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.ContextWrapper
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.os.Environment
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.androidnews.databinding.ActivityFullArticleBinding
 import com.squareup.picasso.Picasso
-import model.FullArticles
-import model.addFullArticles
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+
 
 class FullArticle : AppCompatActivity() {
     private lateinit var binding: ActivityFullArticleBinding
@@ -21,22 +21,48 @@ class FullArticle : AppCompatActivity() {
         binding = ActivityFullArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+       binding.btDownload.setOnClickListener(View.OnClickListener {
+           binding.ivImage.invalidate()
+           val bitmap = (binding.ivImage.getDrawable() as BitmapDrawable).bitmap
+           saveToInternalStorage(bitmap, binding.tvTitle.text.toString())
+       })
+        binding.btShare.setOnClickListener(View.OnClickListener {
+
+        })
 
 
+        binding.tvAuthor.text = intent.getStringExtra("author")
+        binding.tvTitle.text = intent.getStringExtra("title")
+        binding.tvDescription.text = intent.getStringExtra("description")
+        var image = intent.getStringExtra("image")
+        Picasso.get().load(image).into(binding.ivImage)
+        binding.tvDate.text = intent.getStringExtra("data")
 
 
+    }
 
-
-        val author = intent.getStringExtra("author")
-        findViewById<TextView>(R.id.tv_author).text = author
-        val title = intent.getStringExtra("title")
-        findViewById<TextView>(R.id.tv_title).text = title
-        val description = intent.getStringExtra("description")
-        findViewById<TextView>(R.id.tv_description).text = description
-        val image = intent.getStringExtra("image")
-        Picasso.get().load(image).into(findViewById<ImageView>(R.id.iv_image));
-        val data = intent.getStringExtra("data")
-        findViewById<TextView>(R.id.tv_date).text = data
+    private fun saveToInternalStorage(bitmapImage: Bitmap, name: String) {
+        val cw = ContextWrapper(applicationContext)
+        // path to /data/data/yourapp/app_data/imageDir
+        val directory: File? = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        // Create imageDir
+        val mypath = File(directory, name+".jpg")
+        var fos: FileOutputStream? = null
+        try {
+            fos = FileOutputStream(mypath)
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close()
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
 
     }
 

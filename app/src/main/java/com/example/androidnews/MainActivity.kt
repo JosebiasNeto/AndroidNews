@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidnews.databinding.ActivityMainBinding
+import com.squareup.picasso.Picasso
 import model.Articles
 import model.ArticlesResponse
 import model.FullArticlesBuilder
@@ -31,8 +33,9 @@ class MainActivity : AppCompatActivity() {
     private inner class ArticleHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(article: Articles){
             itemView.findViewById<TextView>(R.id.tv_name).text = article.source.name
-            itemView.findViewById<TextView>(R.id.tv_author).text = article.author
+            itemView.findViewById<TextView>(R.id.tv_author).text = "By: " + article.author
             itemView.findViewById<TextView>(R.id.tv_title).text = article.title
+            Picasso.get().load(article.image).into(itemView.findViewById<ImageView>(R.id.iv_image));
         }
     }
 

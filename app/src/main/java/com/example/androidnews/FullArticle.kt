@@ -21,14 +21,12 @@ class FullArticle : AppCompatActivity() {
         binding = ActivityFullArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val bindingArticles = ActivityFullArticleBinding.bind(findViewById(R.id.layout_full_article))
-        val DialogView = LayoutInflater.from(baseContext).inflate(R.layout.activity_full_article, null)
-        val builder = AlertDialog.Builder(baseContext)
-            .setView(DialogView)
-        Adapter.FullArticlesAdapter(addFullArticles())
 
-        val name = intent.getStringExtra("name")
-        findViewById<TextView>(R.id.tv_name).text = name
+
+
+
+
+
         val author = intent.getStringExtra("author")
         findViewById<TextView>(R.id.tv_author).text = author
         val title = intent.getStringExtra("title")

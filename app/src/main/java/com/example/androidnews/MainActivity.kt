@@ -16,13 +16,10 @@ import com.example.androidnews.databinding.ActivityMainBinding
 import com.squareup.picasso.Picasso
 import model.Articles
 import model.ArticlesResponse
-import model.FullArticlesBuilder
-
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -68,21 +65,6 @@ class MainActivity : AppCompatActivity() {
 
         getData()
 
-        /*
-        val articles: MutableList<Articles> = ArrayList()
-        for (a in 0..10){
-            val article = Articles()
-            article.name = "Name$a"
-            article.author = "Author$a"
-            article.title = "Title$a"
-            articles.add(article)
-        }
-        */
-        //articleAdapter = ArticleAdapter(articles)
-        //findViewById<RecyclerView>(R.id.recyclerview).adapter = articleAdapter
-        //findViewById<RecyclerView>(R.id.recyclerview).layoutManager = LinearLayoutManager(applicationContext)
-
-
         val recycler_articles = binding.recyclerview
         recycler_articles.layoutManager = LinearLayoutManager(applicationContext)
 
@@ -91,7 +73,16 @@ class MainActivity : AppCompatActivity() {
                 openFullArticle(position)
             }
         })
+
+        val pullToRefresh = binding.pullToRefresh
+        pullToRefresh.setOnRefreshListener {
+            getData()
+            pullToRefresh.isRefreshing = false
+        }
+
     }
+
+
 
     private fun openFullArticle(idFullArticle: Int){
         val intent = Intent(this, FullArticle::class.java)
@@ -119,14 +110,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<ArticlesResponse>, response: Response<ArticlesResponse>) {
-                articlesList = response.body()?.articles!!
-                binding.recyclerview.adapter = ArticleAdapter(articlesList)
+                    articlesList = response.body()?.articles!!
+                    binding.recyclerview.adapter = ArticleAdapter(articlesList)
             }
         })
     }
-
-
-
 }
 
 

@@ -110,8 +110,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<ArticlesResponse>, response: Response<ArticlesResponse>) {
+                if (response.body() != null) {
                     articlesList = response.body()?.articles!!
                     binding.recyclerview.adapter = ArticleAdapter(articlesList)
+                }
             }
         })
     }

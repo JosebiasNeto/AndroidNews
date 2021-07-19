@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface ArticlesAPI {
 
-    @GET("everything?q=tesla&from=2021-06-05&sortBy=publishedAt&apiKey=b4b9513abbf54d69b6fae62fe10b4351")
+    @GET("everything?q=tesla&from=2021-06-19&sortBy=publishedAt&apiKey=52908155988644249940742a6fa114c1")
     fun getArticles(): Call<ArticlesResponse>
 
 }

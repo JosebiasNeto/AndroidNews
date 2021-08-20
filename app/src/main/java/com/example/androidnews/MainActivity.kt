@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private inner class ArticleAdapter(private val articles: List<Articles>?): RecyclerView.Adapter<ArticleHolder>(){
+    private inner class ArticleAdapter(private val articles: List<Articles>?):
+        RecyclerView.Adapter<ArticleHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleHolder {
            return ArticleHolder(layoutInflater.inflate(R.layout.article_item, parent, false))
         }
@@ -55,8 +56,6 @@ class MainActivity : AppCompatActivity() {
             return 0
         }
     }
-
-    private lateinit var articleAdapter: ArticleAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

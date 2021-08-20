@@ -114,7 +114,6 @@ class FullArticle : AppCompatActivity() {
             }
 
             else -> {
-                // Ignore all other requests.
             }
         }
     }
@@ -122,15 +121,14 @@ class FullArticle : AppCompatActivity() {
 
     private fun saveToInternalStorage(bitmapImage: Bitmap, name: String) {
         val cw = ContextWrapper(applicationContext)
-        // path to /data/data/yourapp/app_data/imageDir
+
         val directory: File? =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        // Create imageDir
+
         val mypath = File(directory, name + ".jpg")
         var fos: FileOutputStream? = null
         try {
             fos = FileOutputStream(mypath)
-            // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos)
             Toast.makeText(applicationContext, "Imagem salva", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
@@ -144,38 +142,5 @@ class FullArticle : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-
     }
-
-
-    /*
-    private inner class FullArticleHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        fun bind(fullarticle: FullArticles){
-            itemView.findViewById<TextView>(R.id.tv_name).text = fullarticle.name
-            itemView.findViewById<TextView>(R.id.tv_author).text = fullarticle.author
-            itemView.findViewById<TextView>(R.id.tv_title).text = fullarticle.title
-            itemView.findViewById<TextView>(R.id.tv_description).text = fullarticle.description
-            itemView.findViewById<TextView>(R.id.iv_image).text = fullarticle.image.toString()
-            itemView.findViewById<TextView>(R.id.tv_date).text = fullarticle.date
-        }
-    }
-
-    private inner class FullArticleAdapter(private val fullarticles: MutableList<FullArticles>): RecyclerView.Adapter<FullArticleHolder>(){
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FullArticleHolder {
-            return FullArticleHolder(layoutInflater.inflate(R.layout.activity_full_article, parent, false))
-        }
-
-        override fun onBindViewHolder(holder: FullArticleHolder, position: Int) {
-            val fullarticle = fullarticles[position]
-            holder.bind(fullarticle)
-        }
-
-        override fun getItemCount(): Int = fullarticles.size
-    }
-
-
-
-    private lateinit var fullarticleAdapter: FullArticleAdapter
-
-*/
 }

@@ -20,7 +20,6 @@ class Articles(
 class ArticlesBuilder{
 
     lateinit var sourceArticle: Source
-   // var nameArticle: String = ""
     var authorArticle: String = ""
     var titleArticle: String = ""
     var description: String = ""
@@ -28,7 +27,6 @@ class ArticlesBuilder{
     var date: String = ""
 
     fun build(): Articles = Articles(
-    //    nameArticle,
         sourceArticle,
         authorArticle,
         titleArticle,
@@ -42,32 +40,3 @@ class ArticlesBuilder{
 
 fun articles(block: ArticlesBuilder.() -> Unit): Articles = ArticlesBuilder().apply(block).build()
 
-/*
-fun getArticles(): MutableList<Articles> = mutableListOf(
-
-    articles {
-        nameArticle = "Name1"
-        authorArticle = "Author1"
-        titleArticle = "Title1"
-    },
-    articles {
-        nameArticle = "Name2"
-        authorArticle = "Author2"
-        titleArticle = "Title2"
-    },
-    articles {
-
-    },
-    articles {
-
-    },
-    articles {
-
-    },
-    articles {
-
-    },
-    articles {
-
-    },
-) */

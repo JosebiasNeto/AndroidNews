@@ -15,9 +15,6 @@ data class FullArticles(
 
     )
 
-
-
-
 class FullArticlesBuilder{
 
     var idFullArticle: Int = 0
@@ -45,40 +42,3 @@ class FullArticlesBuilder{
 
 fun full_articles(block: FullArticlesBuilder.() -> Unit): FullArticles = FullArticlesBuilder().apply(block).build()
 
-fun addFullArticles(): MutableList<FullArticles> = mutableListOf(
-
-    full_articles {
-        idFullArticle = 0
-        nameFullArticle = "Name1"
-        authorFullArticle = "Author1"
-        titleFullArticle = "Title1"
-        descriptionFullArticle = "Description1"
-        imageFullArticle = R.drawable.image1
-        dateFullArticle = "Date1"
-
-    },
-    full_articles {
-        idFullArticle = 1
-        nameFullArticle = "Name2"
-        authorFullArticle = "Author2"
-        titleFullArticle = "Title2"
-        descriptionFullArticle = "Description2"
-        imageFullArticle = R.drawable.image2
-        dateFullArticle = "Data2"
-    },
-    full_articles {
-
-    },
-    full_articles {
-
-    },
-    full_articles {
-
-    },
-    full_articles {
-
-    },
-    full_articles {
-
-    },
-    )

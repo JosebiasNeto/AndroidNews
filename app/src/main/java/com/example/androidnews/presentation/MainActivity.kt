@@ -24,41 +24,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var articlesList : List<Articles>;
-
+    private lateinit var articlesList: List<Articles>;
     private lateinit var binding: ActivityMainBinding
-    private inner class ArticleHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        fun bind(article: Articles){
-            itemView.findViewById<TextView>(R.id.tv_name).text = article.source.name
-            itemView.findViewById<TextView>(R.id.tv_author).text = "By: " + article.author
-            itemView.findViewById<TextView>(R.id.tv_title).text = article.title
-            Picasso.get().load(article.image).into(itemView.findViewById<ImageView>(R.id.iv_image));
-        }
-    }
-
-    private inner class ArticleAdapter(private val articles: List<Articles>?):
-        RecyclerView.Adapter<ArticleHolder>(){
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleHolder {
-           return ArticleHolder(layoutInflater.inflate(R.layout.article_item, parent, false))
-        }
-
-        override fun onBindViewHolder(holder: ArticleHolder, position: Int) {
-            val article = articles?.get(position)
-            if (article != null) {
-                holder.bind(article)
-            }
-        }
-
-        override fun getItemCount(): Int {
-            if (articles != null) {
-                return articles.size
-            }
-            return 0
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         val recycler_articles = binding.recyclerview
         recycler_articles.layoutManager = LinearLayoutManager(applicationContext)
 
-        recycler_articles.addOnItemClickListener(object: OnItemClickListener {
+        recycler_articles.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 openFullArticle(position)
             }
@@ -81,14 +50,10 @@ class MainActivity : AppCompatActivity() {
             getData()
             pullToRefresh.isRefreshing = false
         }
-
     }
 
-
-
-    private fun openFullArticle(idFullArticle: Int){
+    private fun openFullArticle(idFullArticle: Int) {
         val intent = Intent(this, FullArticle::class.java)
-
         val a: Articles = articlesList[idFullArticle]
         intent.putExtra("name", a.source.name)
         intent.putExtra("author", a.author)
@@ -99,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun getData(){
+    fun getData() {
         val retrofitClient = NetworkUtils()
             .getRetrofitInstance("https://newsapi.org/v2/")
 
@@ -111,7 +76,10 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, t.message, Toast.LENGTH_SHORT).show()
             }
 
-            override fun onResponse(call: Call<ArticlesResponse>, response: Response<ArticlesResponse>) {
+            override fun onResponse(
+                call: Call<ArticlesResponse>,
+                response: Response<ArticlesResponse>
+            ) {
                 if (response.body() != null) {
                     articlesList = response.body()?.articles!!
                     binding.recyclerview.adapter = ArticleAdapter(articlesList)

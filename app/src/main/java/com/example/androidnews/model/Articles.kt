@@ -15,9 +15,9 @@ class Articles(
     var image: String = "",
     @SerializedName("publishedAt")
     var data: String = ""
-    )
+)
 
-class ArticlesBuilder{
+class ArticlesBuilder {
 
     lateinit var sourceArticle: Source
     var authorArticle: String = ""
@@ -33,10 +33,7 @@ class ArticlesBuilder{
         description,
         image,
         date,
-
-    )
-
+        )
 }
-
 fun articles(block: ArticlesBuilder.() -> Unit): Articles = ArticlesBuilder().apply(block).build()
 

@@ -9,9 +9,8 @@ class ArticlesResponse(
     var totalResults: String = "",
     @SerializedName("articles")
     var articles: List<Articles>,
-    )
-
-class ArticlesResponseBuilder{
+)
+class ArticlesResponseBuilder {
 
     var status: String = ""
     var totalResults: String = ""
@@ -22,7 +21,6 @@ class ArticlesResponseBuilder{
         totalResults,
         articles,
     )
-
 }
-
-fun articlesResponse(block: ArticlesBuilder.() -> Unit): Articles = ArticlesBuilder().apply(block).build()
+fun articlesResponse(block: ArticlesBuilder.() -> Unit): Articles =
+    ArticlesBuilder().apply(block).build()

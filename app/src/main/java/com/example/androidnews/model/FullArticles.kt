@@ -10,10 +10,8 @@ data class FullArticles(
     var description: String = "",
     var image: Int = 0,
     var date: String = ""
-
-    )
-
-class FullArticlesBuilder{
+)
+class FullArticlesBuilder {
 
     var idFullArticle: Int = 0
     var nameFullArticle: String = ""
@@ -31,12 +29,8 @@ class FullArticlesBuilder{
         descriptionFullArticle,
         imageFullArticle,
         dateFullArticle,
-
         )
-
 }
-
-
-
-fun full_articles(block: FullArticlesBuilder.() -> Unit): FullArticles = FullArticlesBuilder().apply(block).build()
+fun full_articles(block: FullArticlesBuilder.() -> Unit): FullArticles =
+    FullArticlesBuilder().apply(block).build()
 

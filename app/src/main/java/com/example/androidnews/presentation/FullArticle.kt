@@ -34,36 +34,10 @@ class FullArticle : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btDownload.setOnClickListener(View.OnClickListener {
-            saveFile()
+            saveImage()
         })
         binding.btShare.setOnClickListener(View.OnClickListener {
-            try {
-                binding.ivImage.invalidate()
-                val bitmap = (binding.ivImage.drawable as BitmapDrawable).bitmap
-                val cachePath: File = File(applicationContext.getCacheDir(), "images")
-                cachePath.mkdirs() // don't forget to make the directory
-                val stream =
-                    FileOutputStream("$cachePath/image.png") // overwrites this image every time
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                stream.close()
-
-                val imagePath: File = File(applicationContext.getCacheDir(), "images")
-                val newFile = File(imagePath, "image.png")
-                val contentUri: Uri? =
-                    FileProvider.getUriForFile(applicationContext, "com.example.androidnews.fileprovider", newFile)
-
-                if (contentUri != null) {
-                    val shareIntent = Intent()
-                    shareIntent.action = Intent.ACTION_SEND
-                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // temp permission for receiving app to read this file
-                    shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-                    startActivity(Intent.createChooser(shareIntent, "Choose an app"))
-                }
-
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+            shareImage()
         })
 
         binding.tvAuthor.text = intent.getStringExtra("author")
@@ -80,8 +54,42 @@ class FullArticle : AppCompatActivity() {
         }
     }
 
+    private fun shareImage() {
+        try {
+            binding.ivImage.invalidate()
+            val bitmap = (binding.ivImage.drawable as BitmapDrawable).bitmap
+            val cachePath: File = File(applicationContext.getCacheDir(), "images")
+            cachePath.mkdirs() // don't forget to make the directory
+            val stream =
+                FileOutputStream("$cachePath/image.png") // overwrites this image every time
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            stream.close()
+
+            val imagePath: File = File(applicationContext.getCacheDir(), "images")
+            val newFile = File(imagePath, "image.png")
+            val contentUri: Uri? =
+                FileProvider.getUriForFile(
+                    applicationContext,
+                    "com.example.androidnews.fileprovider",
+                    newFile
+                )
+
+            if (contentUri != null) {
+                val shareIntent = Intent()
+                shareIntent.action = Intent.ACTION_SEND
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // temp permission for receiving app to read this file
+                shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
+                shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+                startActivity(Intent.createChooser(shareIntent, "Choose an app"))
+            }
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun saveFile() = run {
+    private fun saveImage() = run {
         if (ContextCompat.checkSelfPermission(
                 applicationContext,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -105,26 +113,15 @@ class FullArticle : AppCompatActivity() {
             0 -> {
                 if ((grantResults.isNotEmpty() &&
                             grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                ) {
-                    saveFile()
-                } else {
-
-                }
-                return
-            }
-
-            else -> {
+                ) saveImage()
             }
         }
     }
 
-
     private fun saveToInternalStorage(bitmapImage: Bitmap, name: String) {
         val cw = ContextWrapper(applicationContext)
-
         val directory: File? =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-
         val mypath = File(directory, name + ".jpg")
         var fos: FileOutputStream? = null
         try {

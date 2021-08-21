@@ -7,21 +7,16 @@ class Source(
     var id: String = "",
     @SerializedName("name")
     var name: String = "",
+    )
 
-)
-
-class SourceBuilder{
-
+class SourceBuilder {
     var idSource: String = ""
     var nameSource: String = ""
-
 
     fun build(): Source = Source(
         idSource,
         nameSource,
-        )
-
+    )
 }
-
 fun source(block: SourceBuilder.() -> Unit): Source = SourceBuilder().apply(block).build()
 

@@ -25,8 +25,8 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <activity android:name=".FullArticle" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".presentation.FullArticle" />
+        <activity android:name=".presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

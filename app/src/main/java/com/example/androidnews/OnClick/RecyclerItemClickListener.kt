@@ -1,4 +1,4 @@
-package OnClick
+package com.example.androidnews.OnClick
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

@@ -1,7 +1,7 @@
-package com.example.androidnews
+package com.example.androidnews.presentation
 
-import OnClick.OnItemClickListener
-import OnClick.addOnItemClickListener
+import com.example.androidnews.OnClick.OnItemClickListener
+import com.example.androidnews.OnClick.addOnItemClickListener
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,10 +12,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidnews.data.NetworkUtils
+import com.example.androidnews.R
+import com.example.androidnews.data.ArticlesAPI
 import com.example.androidnews.databinding.ActivityMainBinding
 import com.squareup.picasso.Picasso
-import model.Articles
-import model.ArticlesResponse
+import com.example.androidnews.model.Articles
+import com.example.androidnews.model.ArticlesResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,4 +1,4 @@
-package model
+package com.example.androidnews.model
 
 import com.google.gson.annotations.SerializedName
 

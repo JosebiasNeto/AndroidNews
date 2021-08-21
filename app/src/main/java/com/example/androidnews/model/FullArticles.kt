@@ -1,6 +1,4 @@
-package model
-
-import com.example.androidnews.R
+package com.example.androidnews.model
 
 
 data class FullArticles(

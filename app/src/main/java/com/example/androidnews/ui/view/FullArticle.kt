@@ -1,4 +1,4 @@
-package com.example.androidnews.presentation
+package com.example.androidnews.ui.view
 
 import android.Manifest
 import android.content.ContextWrapper

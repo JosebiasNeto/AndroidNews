@@ -1,9 +1,8 @@
 package com.example.androidnews.data.model
 
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class Articles(
+data class Article(
 
     @SerializedName("source")
     var source: Source = Source(),

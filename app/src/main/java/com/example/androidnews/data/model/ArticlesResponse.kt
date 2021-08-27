@@ -1,6 +1,5 @@
 package com.example.androidnews.data.model
 
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class ArticlesResponse(
@@ -9,5 +8,5 @@ data class ArticlesResponse(
     @SerializedName("totalResults")
     var totalResults: String = "",
     @SerializedName("articles")
-    var articles: List<Articles>
+    var articles: ArrayList<Article>
 )

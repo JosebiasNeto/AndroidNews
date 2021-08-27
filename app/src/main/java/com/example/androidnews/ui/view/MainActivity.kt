@@ -1,6 +1,5 @@
 package com.example.androidnews.ui.view
 
-import com.example.androidnews.utils.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,13 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidnews.data.api.APIHelper
 import com.example.androidnews.data.api.RetrofitBuilder
 import com.example.androidnews.databinding.ActivityMainBinding
-import com.example.androidnews.data.model.Articles
+import com.example.androidnews.data.model.Article
 import com.example.androidnews.ui.ArticleAdapter
 import com.example.androidnews.ui.viewmodel.MainViewModel
 import com.example.androidnews.ui.viewmodel.ViewModelFactory
 import com.example.androidnews.utils.Status
-import com.example.androidnews.utils.addOnItemClickListener
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -80,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                     Status.SUCCESS -> {
                         binding.recyclerview.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
-                        resource.data?.let { articles -> retrieveList(articles as ArrayList<Articles>) }
+                        resource.data?.let { articles -> retrieveList(articles as ArrayList<Article>) }
                     }
                     Status.ERROR -> {
                         binding.recyclerview.visibility = View.VISIBLE
@@ -97,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun retrieveList(articles: ArrayList<Articles>){
+    private fun retrieveList(articles: ArrayList<Article>){
         adapter.apply {
             addArticles(articles)
             notifyDataSetChanged()

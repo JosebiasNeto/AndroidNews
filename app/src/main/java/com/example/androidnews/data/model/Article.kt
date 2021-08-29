@@ -15,7 +15,8 @@ data class Article(
     @SerializedName("urlToImage")
     var image: String = "",
     @SerializedName("publishedAt")
-    var data: String = ""
+    var data: String = "",
+    val id: String
 )
 
 

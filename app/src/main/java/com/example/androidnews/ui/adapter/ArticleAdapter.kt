@@ -84,7 +84,6 @@ class ArticleAdapter(private val articles: ArrayList<Article>) :
                     notifyDataSetChanged()
                 }
             }
-
         }
     }
 }

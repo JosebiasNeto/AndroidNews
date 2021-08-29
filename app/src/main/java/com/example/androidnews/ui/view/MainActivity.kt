@@ -7,13 +7,13 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +25,7 @@ import com.example.androidnews.databinding.ActivityMainBinding
 import com.example.androidnews.ui.ArticleAdapter
 import com.example.androidnews.ui.viewmodel.MainViewModel
 import com.example.androidnews.ui.viewmodel.ViewModelFactory
+import com.example.androidnews.utils.CheckNetworkConnection
 import com.example.androidnews.utils.OnItemClickListener
 import com.example.androidnews.utils.Status
 import com.example.androidnews.utils.addOnItemClickListener
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: ArticleAdapter
+    private lateinit var networkConnection: CheckNetworkConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +82,39 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun refreshAdapter(articles: ArrayList<Article>) {
+        adapter.apply {
+            addArticles(articles)
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun setupObservers() {
+        networkConnection = CheckNetworkConnection(applicationContext)
+        networkConnection.observe(this, Observer { isConnected ->
+            if(isConnected){
+                viewModel.getArticlesFromAPI().observe(this, {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                resource.data?.articles?.let { it1 -> refreshAdapter(it1) }
+                            }
+                            Status.ERROR -> {
+                                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                            }
+                            Status.LOADING -> {
+                            }
+                        }
+                    }
+                })
+            } else {
+
+            }
+        })
+
+
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.menu_search, menu)
@@ -103,30 +138,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
         return true
-    }
-
-    private fun setupObservers() {
-        viewModel.getArticles().observe(this, {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        resource.data?.articles?.let { it1 -> refreshAdapter(it1) }
-                    }
-                    Status.ERROR -> {
-                        Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                    }
-                    Status.LOADING -> {
-                    }
-                }
-            }
-        })
-    }
-
-    private fun refreshAdapter(articles: ArrayList<Article>) {
-        adapter.apply {
-            addArticles(articles)
-            notifyDataSetChanged()
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

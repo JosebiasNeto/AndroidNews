@@ -5,12 +5,11 @@ import androidx.lifecycle.liveData
 import com.example.androidnews.data.repository.MainRepository
 import com.example.androidnews.utils.Resource
 import kotlinx.coroutines.Dispatchers
-import java.lang.Exception
 
 
 class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
 
-    fun getArticles() = liveData(Dispatchers.IO){
+    fun getArticlesFromAPI() = liveData(Dispatchers.IO){
         emit(Resource.loading(data = null))
         try {
             emit(Resource.success(data = mainRepository.getArticles()))
@@ -18,6 +17,4 @@ class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
     }
-
-
 }

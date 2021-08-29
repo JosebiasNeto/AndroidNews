@@ -3,8 +3,6 @@
     package="com.example.androidnews">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -13,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
-        android:theme="@style/Theme.AndroidNews">
+        android:theme="@style/Theme.AndroidNews"
+        >
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -26,13 +25,19 @@
         </provider>
 
         <activity android:name=".ui.view.FullArticle" />
+
         <activity android:name=".ui.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                        android:resource="@xml/searchable"/>
         </activity>
+
     </application>
 
 </manifest>

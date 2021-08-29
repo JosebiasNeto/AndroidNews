@@ -18,4 +18,6 @@ class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
     }
+
+
 }

@@ -9,7 +9,6 @@ import com.example.androidnews.ui.registration.RegistrationViewParams
 @Entity(tableName = "articles")
 data class ArticleEntity (
     @PrimaryKey val id: Long = 0,
-    var source: Source,
     var author: String,
     var title: String,
     var description: String,
@@ -20,7 +19,6 @@ data class ArticleEntity (
 fun RegistrationViewParams.toArticleEntity(): ArticleEntity{
     return with(this){
         ArticleEntity(
-            source = this.source,
             author = this.author,
             title = this.title,
             description = this.description,
@@ -33,7 +31,6 @@ fun RegistrationViewParams.toArticleEntity(): ArticleEntity{
 fun ArticleEntity.toArticle(): Article {
     return Article(
         id = this.id.toString(),
-        source = this.source,
         author = this.author,
         title = this.title,
         description = this.description,

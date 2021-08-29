@@ -80,7 +80,7 @@ class ArticleAdapter(private val articles: ArrayList<Article>) :
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 if (results?.values != null) {
-                    articlesFilter = results?.values as ArrayList<Article>
+                    articlesFilter = results.values as ArrayList<Article>
                     notifyDataSetChanged()
                 }
             }

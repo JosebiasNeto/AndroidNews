@@ -105,23 +105,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.search_action){
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onBackPressed() {
-        val searchView: SearchView = findViewById(R.id.search_action)
-        if (searchView.isIconified) {
-            searchView.setIconified(true);
-            return
-        }
-        super.onBackPressed()
-    }
-
     private fun setupObservers() {
         viewModel.getArticles().observe(this, {
             it?.let { resource ->

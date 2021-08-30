@@ -3,6 +3,7 @@ package com.example.androidnews.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.androidnews.data.repository.ArticleDbDataSource
+import com.example.androidnews.data.repository.ArticleRepository
 import com.example.androidnews.data.repository.MainRepository
 import com.example.androidnews.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 
 class MainViewModel(
     private val mainRepository: MainRepository,
-    private val dbRepository: ArticleDbDataSource
+    private val dbRepository: ArticleRepository
     ): ViewModel() {
 
     fun getArticlesFromAPI() = liveData(Dispatchers.IO){

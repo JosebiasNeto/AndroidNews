@@ -1,6 +1,7 @@
 package com.example.androidnews.data.repository
 
 import com.example.androidnews.data.db.ArticlesDao
+import com.example.androidnews.data.db.ConvertersEntities
 import com.example.androidnews.data.model.ArticlesResponse
 
 class ArticleDbDataSource(
@@ -12,7 +13,7 @@ class ArticleDbDataSource(
     }
 
     override suspend fun getArticles(): ArticlesResponse {
-        return articlesDao.getArticles().toArticlesResponse()
+        return ConvertersEntities().toArticlesResponse(articlesDao.getArticles())
     }
 
     override suspend fun deleteArticles() {

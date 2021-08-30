@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             this,
             ViewModelFactory(
                 APIHelper(RetrofitBuilder.articlesAPI),
-                ArticlesDatabase.getDatabase(this)
+                ArticleDbDataSource(ArticlesDatabase.getDatabase(this).articlesDao())
                 )
         ).get(MainViewModel::class.java)
     }

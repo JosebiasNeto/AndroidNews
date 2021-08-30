@@ -11,12 +11,4 @@ data class ArticlesResponseEntity(
     var status: String,
     var totalResults: String,
     var articles: ArrayList<Article>
-) {
-    fun toArticlesResponse(): ArticlesResponse {
-        return ArticlesResponse(
-           status = this.status,
-           totalResults = this.totalResults,
-           articles = this.articles
-        )
-    }
-}
+)

@@ -1,6 +1,5 @@
 package com.example.androidnews.data.db
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.androidnews.data.model.Article
@@ -11,7 +10,7 @@ data class ArticlesResponseEntity(
     @PrimaryKey val id: Long = 0,
     var status: String,
     var totalResults: String,
-    @Embedded var articles: ArrayList<Article>,
+    var articles: ArrayList<Article>
 ) {
     fun toArticlesResponse(): ArticlesResponse {
         return ArticlesResponse(

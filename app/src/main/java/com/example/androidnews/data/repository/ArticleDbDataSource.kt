@@ -1,20 +1,22 @@
 package com.example.androidnews.data.repository
 
 import com.example.androidnews.data.db.ArticlesDao
-import com.example.androidnews.data.db.toArticle
-import com.example.androidnews.data.db.toArticleEntity
-import com.example.androidnews.data.model.Article
-import com.example.androidnews.ui.registration.RegistrationViewParams
+import com.example.androidnews.data.model.ArticlesResponse
 
 class ArticleDbDataSource(
     private val articlesDao: ArticlesDao
 ) : ArticleRepository{
-    override fun createArticle(registrationViewParams: RegistrationViewParams) {
-        val articleEntity = registrationViewParams.toArticleEntity()
-        articlesDao.save(articleEntity)
+    override suspend fun insert(articlesResponse: ArticlesResponse) {
+        val articlesResponseEntity = articlesResponse.toArticlesResponseEntity()
+        articlesDao.insert(articlesResponseEntity)
     }
 
-    override fun getArticles(): Article {
-        return articlesDao.getArticles().toArticle()
+    override suspend fun getArticles(): ArticlesResponse {
+        return articlesDao.getArticles().toArticlesResponse()
     }
+
+    override suspend fun deleteArticles() {
+        articlesDao.deleteArticles()
+    }
+
 }

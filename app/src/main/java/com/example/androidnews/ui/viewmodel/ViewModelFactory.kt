@@ -3,13 +3,18 @@ package com.example.androidnews.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.androidnews.data.api.APIHelper
+import com.example.androidnews.data.db.ArticlesDao
+import com.example.androidnews.data.repository.ArticleDbDataSource
 import com.example.androidnews.data.repository.MainRepository
 import java.lang.IllegalArgumentException
 
-class ViewModelFactory(private val apiHelper: APIHelper): ViewModelProvider.Factory {
+class ViewModelFactory(
+    private val apiHelper: APIHelper,
+    private val articlesDao: ArticlesDao
+    ): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)){
-            return MainViewModel(MainRepository(apiHelper)) as T
+            return MainViewModel(MainRepository(apiHelper), ArticleDbDataSource(articlesDao)) as T
         }
         throw IllegalArgumentException("Unknown class name")
     }

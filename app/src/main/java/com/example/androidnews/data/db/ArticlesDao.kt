@@ -1,16 +1,17 @@
 package com.example.androidnews.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface ArticlesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(article: ArticleEntity)
+    fun insert(articlesResponseEntity: ArticlesResponseEntity)
 
-    @Query("SELECT * FROM articles")
-    fun getArticles(): ArticleEntity
+    @Query("SELECT * FROM articles_response")
+    fun getArticles(): ArticlesResponseEntity
+
+    @Query("DELETE FROM articles_response")
+    fun deleteArticles()
+
 }

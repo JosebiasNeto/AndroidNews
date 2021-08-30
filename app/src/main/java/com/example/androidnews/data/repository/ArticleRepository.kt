@@ -1,12 +1,11 @@
 package com.example.androidnews.data.repository
 
-import com.example.androidnews.data.model.Article
-import com.example.androidnews.ui.registration.RegistrationViewParams
+import com.example.androidnews.data.model.ArticlesResponse
 
 interface ArticleRepository {
 
-    fun createArticle(registrationViewParams: RegistrationViewParams)
-
-    fun getArticles(): Article
+    suspend fun insert(articlesResponse: ArticlesResponse)
+    suspend fun getArticles(): ArticlesResponse
+    suspend fun deleteArticles()
 
 }

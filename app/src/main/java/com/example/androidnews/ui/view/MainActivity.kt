@@ -17,10 +17,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.example.androidnews.R
 import com.example.androidnews.data.api.APIHelper
 import com.example.androidnews.data.api.RetrofitBuilder
+import com.example.androidnews.data.db.ArticlesDao
+import com.example.androidnews.data.db.ArticlesDatabase
 import com.example.androidnews.data.model.Article
+import com.example.androidnews.data.repository.ArticleDbDataSource
 import com.example.androidnews.databinding.ActivityMainBinding
 import com.example.androidnews.ui.ArticleAdapter
 import com.example.androidnews.ui.viewmodel.MainViewModel
@@ -38,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: ArticleAdapter
     private lateinit var networkConnection: CheckNetworkConnection
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -51,7 +56,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupViewModel() {
         viewModel = ViewModelProvider(
             this,
-            ViewModelFactory(APIHelper(RetrofitBuilder.articlesAPI))
+            ViewModelFactory(
+                APIHelper(RetrofitBuilder.articlesAPI),
+                ArticlesDatabase.getDatabase(this)
+                )
         ).get(MainViewModel::class.java)
     }
 
@@ -93,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         networkConnection = CheckNetworkConnection(applicationContext)
         networkConnection.observe(this, Observer { isConnected ->
             if(isConnected){
+                viewModel.insertArticlesFromAPItoDatabase()
                 viewModel.getArticlesFromAPI().observe(this, {
                     it?.let { resource ->
                         when (resource.status) {
@@ -108,7 +117,20 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
             } else {
-
+                viewModel.getArticlesFromDatabase().observe(this, {
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                resource.data?.articles?.let { it1 -> refreshAdapter(it1) }
+                            }
+                            Status.ERROR -> {
+                                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                            }
+                            Status.LOADING -> {
+                            }
+                        }
+                    }
+                })
             }
         })
 

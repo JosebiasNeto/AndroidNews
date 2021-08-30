@@ -16,7 +16,7 @@ data class Article(
     var image: String = "",
     @SerializedName("publishedAt")
     var data: String = "",
-    val id: String
+    val id: Long
 )
 
 

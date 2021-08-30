@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.net.*
 import android.os.Build
 import androidx.lifecycle.LiveData
+import com.example.androidnews.data.repository.MainRepository
 
 class CheckNetworkConnection(private val context: Context) : LiveData<Boolean>() {
 

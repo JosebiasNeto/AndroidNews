@@ -1,7 +1,22 @@
 package com.example.androidnews.data.repository
 
-import com.example.androidnews.data.api.APIHelper
+import com.example.androidnews.data.model.Article
+import com.example.androidnews.utils.CheckNetworkConnection
 
-class MainRepository(private val apiHelper: APIHelper) {
-    suspend fun getArticles() = apiHelper.getArticles()
+class MainRepository(
+    private val articlesAPI: ArticlesAPIDataSource,
+    private val articlesDb: ArticlesDbDataSource,
+    private var networkConnection: CheckNetworkConnection
+) {
+
+    suspend fun getArticles(): List<Article> {
+
+        if (networkConnection.value == true) {
+            articlesDb.deleteArticles()
+            articlesAPI.getArticles().articles.forEach { article ->
+                articlesDb.insert(article)
+            }
+        }
+        return articlesDb.getArticles()
+    }
 }

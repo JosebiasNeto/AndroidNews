@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.androidnews.data.model.ArticleEntity
+import com.example.androidnews.data.model.Converters
 
-@Database(entities = [ArticlesResponseEntity::class], version = 1)
-@TypeConverters(Converters::class)
+@Database(entities = [ArticleEntity::class], version = 1)
 abstract class ArticlesDatabase : RoomDatabase() {
 
     abstract fun articlesDao(): ArticlesDao

@@ -13,18 +13,15 @@ import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
 import com.example.androidnews.R
-import com.example.androidnews.data.api.APIHelper
 import com.example.androidnews.data.api.RetrofitBuilder
-import com.example.androidnews.data.db.ArticlesDao
 import com.example.androidnews.data.db.ArticlesDatabase
 import com.example.androidnews.data.model.Article
-import com.example.androidnews.data.repository.ArticleDbDataSource
+import com.example.androidnews.data.repository.ArticlesAPIDataSource
+import com.example.androidnews.data.repository.ArticlesDbDataSource
 import com.example.androidnews.databinding.ActivityMainBinding
 import com.example.androidnews.ui.ArticleAdapter
 import com.example.androidnews.ui.viewmodel.MainViewModel
@@ -40,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: ArticleAdapter
-    private lateinit var networkConnection: CheckNetworkConnection
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +53,9 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(
             this,
             ViewModelFactory(
-                APIHelper(RetrofitBuilder.articlesAPI),
-                ArticleDbDataSource(ArticlesDatabase.getDatabase(this).articlesDao())
+                ArticlesAPIDataSource(RetrofitBuilder.articlesAPI),
+                ArticlesDbDataSource(ArticlesDatabase.getDatabase(this).articlesDao()),
+                CheckNetworkConnection(this)
                 )
         ).get(MainViewModel::class.java)
     }
@@ -90,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun refreshAdapter(articles: ArrayList<Article>) {
+    private fun refreshAdapter(articles: List<Article>) {
         adapter.apply {
             addArticles(articles)
             notifyDataSetChanged()
@@ -98,30 +95,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        networkConnection = CheckNetworkConnection(applicationContext)
-        networkConnection.observe(this, Observer { isConnected ->
-            if(isConnected){
-                viewModel.insertArticlesFromAPItoDatabase()
-                viewModel.getArticlesFromAPI().observe(this, {
+
+                viewModel.getArticles().observe(this, {
                     it?.let { resource ->
                         when (resource.status) {
                             Status.SUCCESS -> {
-                                resource.data?.articles?.let { it1 -> refreshAdapter(it1) }
-                            }
-                            Status.ERROR -> {
-                                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                            }
-                            Status.LOADING -> {
-                            }
-                        }
-                    }
-                })
-            } else {
-                viewModel.getArticlesFromDatabase().observe(this, {
-                    it?.let { resource ->
-                        when (resource.status) {
-                            Status.SUCCESS -> {
-                                resource.data?.articles?.let { it1 -> refreshAdapter(it1) }
+                                resource.data?.let { it1 -> refreshAdapter(it1) }
                             }
                             Status.ERROR -> {
                                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
@@ -132,10 +111,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
             }
-        })
-
-
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater

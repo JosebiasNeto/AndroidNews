@@ -8,7 +8,6 @@ import android.content.IntentFilter
 import android.net.*
 import android.os.Build
 import androidx.lifecycle.LiveData
-import com.example.androidnews.data.repository.MainRepository
 
 class CheckNetworkConnection(private val context: Context) : LiveData<Boolean>() {
 
@@ -81,8 +80,10 @@ class CheckNetworkConnection(private val context: Context) : LiveData<Boolean>()
         }
     }
 
-    private fun updateConnection() {
+    fun updateConnection(): Boolean {
         val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
-        postValue(activeNetwork?.isConnected == true)
+        return activeNetwork?.isConnected == true
     }
+
+
 }

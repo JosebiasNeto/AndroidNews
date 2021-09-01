@@ -11,13 +11,13 @@ class MainRepository(
 
     suspend fun getArticles(): List<Article> {
 
-
-        articlesDb.deleteArticles()
-        articlesAPI.getArticles().articles.forEach { article ->
-            articlesDb.insert(article)
+        var isOnline: Boolean = networkConnection.updateConnection()
+        if (isOnline == true){
+            articlesDb.deleteArticles()
+            articlesAPI.getArticles().articles.forEach { article ->
+                articlesDb.insert(article)
+            }
         }
-
         return articlesDb.getArticles()
-
     }
 }

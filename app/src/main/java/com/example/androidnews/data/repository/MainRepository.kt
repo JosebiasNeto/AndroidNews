@@ -11,12 +11,13 @@ class MainRepository(
 
     suspend fun getArticles(): List<Article> {
 
-        if (networkConnection.value == true) {
-            articlesDb.deleteArticles()
-            articlesAPI.getArticles().articles.forEach { article ->
-                articlesDb.insert(article)
-            }
+
+        articlesDb.deleteArticles()
+        articlesAPI.getArticles().articles.forEach { article ->
+            articlesDb.insert(article)
         }
+
         return articlesDb.getArticles()
+
     }
 }

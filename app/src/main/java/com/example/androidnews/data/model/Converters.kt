@@ -1,8 +1,5 @@
 package com.example.androidnews.data.model
 
-import androidx.room.TypeConverter
-import com.google.gson.Gson
-
 object Converters {
 
     fun toArticle(articleEntity: ArticleEntity): Article {

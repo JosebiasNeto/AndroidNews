@@ -7,13 +7,13 @@ import com.example.androidnews.data.model.Source
 
 @Entity(tableName = "articles")
 data class ArticleEntity(
-    @PrimaryKey var id: Long = 0,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     @Ignore
     var source: Source = Source(),
-    var author: String = "",
-    var title: String = "",
-    var description: String = "",
-    var image: String = "",
-    var data: String = "",
+    var author: String? = "",
+    var title: String? = "",
+    var description: String? = "",
+    var image: String? = "",
+    var data: String? = "",
 )
 

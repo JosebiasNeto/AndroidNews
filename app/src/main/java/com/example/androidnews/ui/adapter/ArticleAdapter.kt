@@ -50,6 +50,7 @@ class ArticleAdapter(private val articles: ArrayList<Article>) :
 
     fun getArticle(position: Int) = articlesFilter[position]
 
+
     override fun getFilter(): Filter {
         return object : Filter(){
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -59,17 +60,18 @@ class ArticleAdapter(private val articles: ArrayList<Article>) :
                 } else {
                     var resultList: MutableList<Article> = ArrayList()
                     for (art in articles){
-                        if (art.author.lowercase(Locale.ROOT).contains(
-                                charSearch.lowercase(Locale.ROOT)) ||
-                            art.title.lowercase(Locale.ROOT).contains(
-                                charSearch.lowercase(Locale.ROOT)) ||
-                            art.description.lowercase(Locale.ROOT).contains(
-                                charSearch.lowercase(Locale.ROOT)) ||
-                            art.data.lowercase(Locale.ROOT).contains(
-                                charSearch.lowercase(Locale.ROOT))
-                            ){
-                            resultList.add(art)
-                        }
+
+//                        if (art.author.lowercase(Locale.ROOT).contains(
+//                                charSearch.lowercase(Locale.ROOT)) ||
+//                            art.title.lowercase(Locale.ROOT).contains(
+//                                charSearch.lowercase(Locale.ROOT)) ||
+//                            art.description.lowercase(Locale.ROOT).contains(
+//                                charSearch.lowercase(Locale.ROOT)) ||
+//                            art.data.lowercase(Locale.ROOT).contains(
+//                                charSearch.lowercase(Locale.ROOT))
+//                            ){
+//                            resultList.add(art)
+//                        }
                         articlesFilter = resultList as ArrayList<Article>
                     }
                 }

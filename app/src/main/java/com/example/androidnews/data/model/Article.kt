@@ -7,16 +7,16 @@ data class Article(
     @SerializedName("source")
     var source: Source = Source(),
     @SerializedName("author")
-    var author: String = "",
+    var author: String? = "",
     @SerializedName("title")
-    var title: String = "",
+    var title: String? = "",
     @SerializedName("description")
-    var description: String = "",
+    var description: String? = "",
     @SerializedName("urlToImage")
-    var image: String = "",
+    var image: String? = "",
     @SerializedName("publishedAt")
-    var data: String = "",
-    val id: Long
+    var data: String? = "",
+    var id: Long = 0
 )
 
 
